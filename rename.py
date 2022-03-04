@@ -1,3 +1,4 @@
+from itertools import count
 import os
 import sys
 import time
@@ -6,7 +7,8 @@ import re
 
 regex = re.compile(r'[0-3]?\d\/[0-1]?\d\/[12]\d\d\d', )
 
-path = os.path.join(os.getcwd(),'arquivo/')
+path = ('C:\\projetos\\rename\\arquivo\\')
+# path = os.path.join(os.getcwd(),'arquivo/')
 dir = sorted(os.listdir(path))
 
 
@@ -55,8 +57,8 @@ if file_size == '':
 # renomeia, e printa no terminal
 
 def classification():
-    menos = 0
-    for index, files in enumerate(dir):
+    cont = 0
+    for files in dir:
 
         #================================================
         # pega a data de modificação dos arquivos e 
@@ -83,37 +85,35 @@ def classification():
         
         if (files.endswith(".pdf") and float(f_size_kb) <= float(file_size)):
             if result_modification == date or date_modification == "":                             
-                if float(number_of_files) != float(index-menos):
-                    
-                    #====================================================
-                    # printa no terminal o número e o tamanho do arquivo.
-                        
-                    print("========================================================")
-                    print((index+1)-menos, result_modification)
-                    print(f_size_kb, "Kb")
-                
-                    #=====================================================
-                    # monta o nome dos arquivo e confere se o nome do arquivo 
-                    # ja existe, caso exista o nome do arquivo não é alterado
-                    # e printa uma mensagem avisando que não houve alteração
-                    # se não, altera o nome do arquivo e printa no terminal.
-
-                    result_new_name = new_name+str((index+1)-menos)+".pdf"
-                    result_old_name = files
-                    if result_new_name not in dir:
-                        os.rename(path+result_old_name, path+result_new_name)
-                        print("Você mudou o arquivo {} por {}".format(result_old_name, result_new_name))
-                        print("========================================================")
-                    else:
-                        print("O arquivo {} já existe".format(result_old_name))
-                        print("========================================================")
-            
-                else:
+                if str(cont) == number_of_files:
                     break
-            else:
-                menos += 1
-        else:
-            menos +=1
+                #====================================================
+                # printa no terminal o número e o tamanho do arquivo.
+                    
+                print("========================================================")
+                print((cont+1), result_modification)
+                print(f_size_kb, "Kb")
             
+                #=====================================================
+                # monta o nome dos arquivo e confere se o nome do arquivo 
+                # ja existe, caso exista o nome do arquivo não é alterado
+                # e printa uma mensagem avisando que não houve alteração
+                # se não, altera o nome do arquivo e printa no terminal.
+
+                result_new_name = new_name+str(cont+1)+".pdf"
+                result_old_name = files
+                if result_new_name not in dir:
+                    os.rename(path+result_old_name, path+result_new_name)
+                    print("Você mudou o arquivo {} por {}".format(result_old_name, result_new_name))
+                    print("========================================================")
+                    cont += 1
+                else:
+                    print("O arquivo {} já existe".format(result_old_name))
+                    print("========================================================")
+                    cont += 1
+    if cont == 0:
+        print("=========================")
+        print("Nenhum arquivo encontrado")  
+        print("=========================") 
 classification()
         
