@@ -1,2 +1,2 @@
 # renomeador-arquivos
-Renomeia arquivos
+Renomeia arquivos do linho
