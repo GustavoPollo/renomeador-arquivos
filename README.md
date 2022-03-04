@@ -1,2 +1,2 @@
 # renomeador-arquivos
-Renomeia arquivos do pollinho
+Renomeia arquivos
